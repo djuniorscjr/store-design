@@ -1,7 +1,9 @@
 const gulp = require('gulp');
 const connect = require('gulp-connect');
-const open = require('gulp-open'); 
+const open = require('gulp-open');
 const concat = require('gulp-concat');
+const minifyCss = require('gulp-minify-css');
+const rename = require('gulp-rename');
 
 const config = {
     port: 3000,
@@ -49,6 +51,10 @@ gulp.task('font', () => {
 gulp.task('css', () => {
     gulp.src(config.paths.css)
         .pipe(concat('bundle.css'))
+        .pipe(minifyCss({
+            keepSpecialComments: 0
+        }))
+        .pipe(rename({ extname: '.min.css'}))
         .pipe(gulp.dest(config.paths.dist + '/css'));
 });
 
